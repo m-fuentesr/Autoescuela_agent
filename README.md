@@ -1,8 +1,8 @@
-﻿# Autoescuela Agent — Framework Consultor de Dominio
+# Autoescuela Agent — Framework Consultor de Dominio
 
 Este proyecto **no es una aplicación**. Es la **infraestructura cognitiva** (el "cerebro" y sus reglas de contención) de un **Agente Consultor de IA** especializado en la **operación del negocio de una escuela de conducción chilena**.
 
-Está modelado sobre el framework `D:\Sys_bodega_agent` (consultor de bodega) y adaptado al dominio autoescuela. Su filosofía es **"Cero Alucinaciones"**: cada respuesta se basa en reglas explícitas de sus `specs/` o en una **cita al código real** del producto (`el repositorio Autoescuela`), nunca en suposiciones.
+Está modelado sobre un sólido framework de agente consultor previo, el cual ha sido adaptado minuciosamente al dominio de la autoescuela. Su filosofía es **"Cero Alucinaciones"**: cada respuesta se basa en reglas explícitas de sus `specs/` o en una **cita al código real** del producto (`el repositorio Autoescuela`), nunca en suposiciones.
 
 ---
 

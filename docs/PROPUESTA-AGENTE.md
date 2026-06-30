@@ -1,7 +1,10 @@
 # Propuesta: Agente Consultor de Dominio para Autoescuela
 
+> [!NOTE] 
+> **Documentación histórica para humanos.** El Agente NO debe extraer reglas de dominio de esta carpeta, ya que contiene referencias estructurales e históricas al framework base original.
+
 > **Para:** equipo de desarrollo
-> **Qué es esto:** la estructura propuesta para construir un "agente consultor" del negocio de autoescuela, modelado sobre un framework que ya tenemos funcionando para otro rubro (bodega).
+> **Qué es esto:** la estructura propuesta para construir un "agente consultor" del negocio de autoescuela, modelado sobre un framework base que ya tenemos funcionando.
 > **Estado:** propuesta para revisar antes de construir.
 
 ---
@@ -12,7 +15,7 @@ No es una aplicación ni código nuevo del producto. Es un **"cerebro" en archiv
 
 Pensalo como la **documentación viva y estructurada del negocio**, escrita en un formato que la IA está obligada a leer y respetar antes de opinar.
 
-Está basado en un framework que ya existe y funciona: `D:\Sys_bodega_agent`, un agente consultor para operaciones de bodega. Acá lo adaptamos al dominio autoescuela.
+Está basado en un framework base que ya existe y funciona. Acá lo adaptamos al dominio autoescuela.
 
 ### Filosofía heredada del framework (los 4 pilares)
 
@@ -88,28 +91,28 @@ d:\Autoescuela_agent\
 
 ---
 
-## 5. Las 3 adaptaciones clave respecto al framework de bodega
+## 5. Las 3 adaptaciones clave respecto al framework base
 
-El framework de bodega nació "en blanco" y para un rubro distinto. Estas son las tres cosas que cambiamos para autoescuela:
+El framework base nació "en blanco" y para un rubro distinto. Estas son las tres cosas que cambiamos para autoescuela:
 
 ### 5.1 `CODE_MAP.md` + Regla de Punteros (fuente de verdad mixta)
 Como Autoescuela ya tiene el conocimiento codificado, el agente **no duplica** todo: mantiene un mapa de punteros al código real. Cuando afirma una regla de negocio, la respalda con una cita tipo `indices/DATABASE.md:67` o el nombre de una migración/facade. Así evitamos que la doc del agente se desincronice del producto.
 
 ### 5.2 `compliance_check` en dos capas (la normativa advierte, no bloquea)
 La matriz de validación se divide en:
-- **Invariantes de integridad** → *bloquean* (ej: Triple Match incompleto, doble-booking de instructor/vehículo, mover stock inexistente).
+- **Invariantes de integridad** → *bloquean* (ej: Triple Match incompleto, doble-booking de instructor/vehículo, agendar un vehículo en mantenimiento).
 - **Advertencias normativas** → *advierten y citan la norma* (ej: alumno menor de 17, SOAP vencido, más clases/día que el máximo MTT).
 
 Esto cumple la decisión de que la normativa dé **avisos claros**, no que frene la operación.
 
 ### 5.3 Onboarding dual (destilar + entrevistar)
-A diferencia de bodega, acá el agente arranca con material. La skill de onboarding primero **destila lo que ya está en el código** hacia sus specs, y luego **entrevista al equipo** solo sobre lo que *no* está codificado (lo que aparece en las reuniones: flujo de pruebas escritas por email, "concepto" vs nota en evaluaciones, opción de horario "bloque", etc.).
+A diferencia del framework anterior, acá el agente arranca con material. La skill de onboarding primero **destila lo que ya está en el código** hacia sus specs, y luego **entrevista al equipo** solo sobre lo que *no* está codificado (lo que aparece en las reuniones: flujo de pruebas escritas por email, "concepto" vs nota en evaluaciones, opción de horario "bloque", etc.).
 
 ### Resumen del mapeo
 
-| Pieza del framework bodega | Adaptación autoescuela | Cambio de fondo |
+| Pieza del framework base | Adaptación autoescuela | Cambio de fondo |
 |---|---|---|
-| `identity.md` (Jefe de Bodega) | Consultor de Operaciones de Autoescuela | Nuevas entidades y Critic Loop |
+| `identity.md` (Rol anterior) | Consultor de Operaciones de Autoescuela | Nuevas entidades y Critic Loop |
 | Discovery Gate | Igual + **Regla de Punteros** | Citar `ruta:línea` del código real |
 | `DOMAIN_GLOSSARY` (LPN, SKU…) | Triple Match, Clase B/Prof, SENCE… | Cada término con puntero al código |
 | `PAIN_LOG` (extraído en blanco) | Sembrado desde reuniones/auditorías | Ya hay dolores documentados |

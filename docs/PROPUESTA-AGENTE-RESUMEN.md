@@ -1,11 +1,14 @@
 # Propuesta: Agente Consultor de Dominio para Autoescuela (resumen)
 
 > **Para:** equipo de desarrollo · **Estado:** propuesta a revisar antes de construir.
+> 
+> [!NOTE] 
+> **Documentación histórica para humanos.** El Agente NO debe extraer reglas de dominio de esta carpeta.
 
 ## 1. Qué es
 Un **"cerebro" en archivos Markdown** que le da a una IA el modelo mental correcto del **negocio de una autoescuela chilena**. No es código del producto: es la documentación viva y estructurada del negocio, en un formato que la IA está obligada a leer y respetar antes de opinar.
 
-Está basado en un framework que ya funciona (`D:\Sys_bodega_agent`, un consultor de bodega). Lo adaptamos al rubro autoescuela.
+Está basado en un framework base que ya funciona. Lo adaptamos al rubro autoescuela.
 
 **Filosofía heredada:** (1) **Cero alucinaciones** — si no tiene la regla, la pregunta o la cita; nunca la inventa. (2) **Spec-Driven** — el conocimiento vive en archivos, no en el chat. (3) **Critic Loop** — valida su propia idea contra una matriz de reglas antes de mostrártela. (4) **Escritura activa** — entrevista al equipo y redacta ella misma la doc faltante.
 
@@ -49,7 +52,7 @@ d:\Autoescuela_agent\
 └── task\TASK_INDEX.md             # Tareas derivadas de los dolores
 ```
 
-## 5. Las 3 adaptaciones clave (vs el framework de bodega)
+## 5. Las 3 adaptaciones clave (vs el framework base)
 1. **`CODE_MAP.md` + Regla de Punteros** — como el conocimiento ya está en el código, el agente no lo duplica: lo cita (`DATABASE.md:67`, una migración, un facade). Evita que su doc se desincronice del producto.
 2. **`compliance_check` en 2 capas** — **invariantes de integridad** que *bloquean* (Triple Match incompleto, doble-booking) vs **advertencias normativas** que *avisan y citan la norma* (menor de 17, SOAP vencido, exceso de clases/día). Cumple que la normativa avise, no frene.
 3. **Onboarding dual** — el agente arranca con material: primero **destila lo que ya está en el código**, y luego **entrevista al equipo** solo sobre lo no codificado (pruebas por email, "concepto" vs nota, horario "bloque"…).

@@ -1,7 +1,7 @@
-﻿# Skill: Context Onboarding & Knowledge Extraction (Dual)
+# Skill: Context Onboarding & Knowledge Extraction (Dual)
 
 ## Propósito
-Convierte al agente en un "Entrevistador de Dominio" proactivo. A diferencia del framework de bodega (que nació en blanco), Autoescuela **ya tiene mucho conocimiento codificado** en `el repositorio Autoescuela`. Por eso el onboarding es **DUAL**:
+Convierte al agente en un "Entrevistador de Dominio" proactivo. Dado que Autoescuela **ya tiene mucho conocimiento codificado** en `el repositorio Autoescuela`, el onboarding es **DUAL**:
 
 - **Vía A — Destilar del código:** extraer reglas ya implementadas y reflejarlas en specs propias con punteros.
 - **Vía B — Entrevistar al equipo:** capturar lo que **NO** está en el código (decisiones de reunión, intenciones, normativa, dolores).
