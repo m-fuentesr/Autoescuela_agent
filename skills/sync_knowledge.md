@@ -13,6 +13,8 @@ Cuando el usuario invoque `/sync` o al detectar que una sesión va a finalizar:
    - ¿Se confirmó una política de negocio? → `specs/domain/policies.md`
    - ¿Se aportó una fuente/regla normativa? → `specs/regulatory/normativa_chile.md`
    - ¿Se descubrió o cambió una invariante/advertencia? → `specs/eval/compliance_check.md`
+   - ¿Se procesó una transcripción de reunión? → acta en `reuniones/` + fila en `reuniones/INDEX.md`; verifica que todo hallazgo `[Validado]`/`[Por Validar]` del acta ya esté ruteado a su spec/índice (no debe quedar solo en el acta).
+   - ¿Se confirmó/fusionó/partió un bounded context, o se resolvió una marca 🟡? → `indices/CONTEXT_MAP.md` (cambiar 🟡→🟢 al validar, actualizar relaciones o casos de la auditoría).
 
 2. **Auditoría de Punteros (específica de este agente):**
    - ¿Alguna afirmación se respaldó citando el código? → asegúrate de que el puntero quede en `indices/CODE_MAP.md` o en el spec correspondiente.

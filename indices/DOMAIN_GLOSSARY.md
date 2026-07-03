@@ -41,7 +41,8 @@
 - **Clase B `[Validado]`** — Licencia de conducción de vehículos particulares. Programa de **12 clases prácticas**. La asistencia se controla con inicio/fin de clase por la secretaria.
 - **Carnet dual `[Validado]`** — Documento que certifica avance: **carnet inicial** (6 clases, fondo amarillo, `license_initial_url`) y **carnet completo** (12 clases, fondo verde, `license_full_url`). El `certificate_enabled` pasa a true cuando se completa la clase práctica #12.
   → código: `enrollments.license_initial_url`/`license_full_url` (`DATABASE.md:67`, fix-019).
-- **Clase teórica / Zoom `[Validado]`** — Sesión teórica online; la lista de invitados = lista de asistencia, la secretaria marca en tiempo real.
+- **Clase Online / Clase teórica (Zoom) `[Validado]`** — **Tipo de clase** impartida de forma **online y teórica**. Aplica **tanto a Clase B como a Academia Profesional** (no es exclusiva de Clase B). La lista de invitados = lista de asistencia; la secretaria marca en tiempo real. Se gestiona/agenda vía `ClaseOnlineFacade`.
+  → código: `class_b_theory_sessions` / `professional_theory_sessions`, `ClaseOnlineFacade`.
 - **Máximo de clases por día `[Validado]`** — Regulación MTT: **1 clase de 45 min/día**. Online (alumno): máx 1/día. En sede (secretaria): hasta 3/día; más de 3 → agenda manual al día siguiente. Soportado por `courses.max_classes_per_day`.
   → código: `courses.max_classes_per_day` (`DATABASE.md:12`), `reunion-demo-2026-05-29.md:25-28`.
 

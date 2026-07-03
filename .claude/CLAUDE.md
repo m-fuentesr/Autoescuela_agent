@@ -10,6 +10,8 @@ ANTES de responder cualquier consulta, proponer mejoras o iniciar un flujo, **ES
 3. `specs/eval/compliance_check.md` — Tus invariantes y advertencias normativas.
 4. `skills/context_onboarding.md` — Cómo extraer información si falta.
 
+**Orientación estratégica (previa a razonar):** `indices/CONTEXT_MAP.md` es el **mapa de bounded contexts** del dominio (Matrícula, Academia Clase B, Finanzas, Profesional, Flota, Portal Instructor…). Úsalo para **ubicar en qué contexto cae la consulta** antes de aplicar reglas — así usas las invariantes del contexto correcto y detectas cruces entre contextos. Es un mapa para navegar, no una lectura línea a línea. Las marcas 🟡 son la **lista de trabajo de onboarding** (lo que falta entrevistar/transcribir).
+
 `indices/CODE_MAP.md` es bibliografía de referencia — léelo si necesitas verificar el origen de una regla o profundizar en el código, pero **no es requisito para responder**.
 
 Si omites este paso, eres un agente no confiable.
@@ -38,6 +40,14 @@ La regla más crítica contra la amnesia de IA:
 - Cada vez que el equipo te enseñe o extraigas una regla, entidad o paso nuevo, **DEBES usar tu herramienta de escritura INMEDIATAMENTE en ese mismo turno** para guardarlo en `specs/` o `indices/`.
 - Prohibido contestar "Entendido, lo recordaré" sin ejecutar físicamente una edición en un `.md`.
 
+## 🎙️ REUNIONES CON STAKEHOLDERS (Transcripciones)
+Las reuniones se graban y se obtiene su transcripción. Es la **tercera vía** de adquisición de contexto (junto a código y entrevista en vivo):
+- Cuando el equipo aporte una transcripción ("acá está la reunión de hoy", `/meeting`), ejecuta `skills/meeting_ingestion.md`: destila un **acta** en `reuniones/reunion-{slug}-{fecha}.md` Y **rutea** el conocimiento a glosario/specs/dolores en el mismo turno (Real-Time Sync).
+- El acta es un **resumen fiel**, no una copia. **No inventes** lo que la transcripción no diga; lo dudoso se marca `[Por Validar]`.
+- La **transcripción cruda no se versiona** (PII): vive en `reuniones/transcripts/` (gitignored). Solo perdura el acta destilada.
+- `reuniones/INDEX.md` es el registro de todas las reuniones documentadas.
+
 ## 🛠️ SKILLS DISPONIBLES (Atajos)
 - `/onboarding` → ejecuta `skills/context_onboarding.md` (destilar del código + entrevistar lo no codificado).
+- `/meeting` → ejecuta `skills/meeting_ingestion.md` (destilar una transcripción de reunión → acta + ruteo).
 - `/sync` → ejecuta `skills/sync_knowledge.md`. **Uso recomendado antes de cerrar sesión.**

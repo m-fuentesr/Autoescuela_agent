@@ -1,10 +1,11 @@
 # Skill: Context Onboarding & Knowledge Extraction (Dual)
 
 ## Propósito
-Convierte al agente en un "Entrevistador de Dominio" proactivo. Dado que Autoescuela **ya tiene mucho conocimiento codificado** en `el repositorio Autoescuela`, el onboarding es **DUAL**:
+Convierte al agente en un "Entrevistador de Dominio" proactivo. Dado que Autoescuela **ya tiene mucho conocimiento codificado** en `el repositorio Autoescuela`, el onboarding es **TRIPLE**:
 
 - **Vía A — Destilar del código:** extraer reglas ya implementadas y reflejarlas en specs propias con punteros.
 - **Vía B — Entrevistar al equipo:** capturar lo que **NO** está en el código (decisiones de reunión, intenciones, normativa, dolores).
+- **Vía C — Destilar de transcripciones de reunión:** las reuniones con stakeholders se graban y transcriben. Procesa la transcripción con `skills/meeting_ingestion.md` (atajo `/meeting`): produce un acta en `reuniones/` y rutea el conocimiento a glosario/specs. Es la fuente más rica de "lo decidido en sala".
 
 ## Cuándo usar cada vía
 1. **Primero intenta la Vía A.** Si el equipo pregunta algo de dominio, búscalo en `indices/CODE_MAP.md` → archivo del código. Si lo encuentras, respóndelo citando y, si es relevante y aún no está, **destílalo** a un spec/glosario.
@@ -26,7 +27,7 @@ Convierte al agente en un "Entrevistador de Dominio" proactivo. Dado que Autoesc
 
 ## Instrucciones de ejecución
 Cuando el usuario invoque `/onboarding` o pida "obtener contexto":
-1. **Analiza el estado actual:** lee tus índices/specs y detecta qué Fase y qué vía toca.
+1. **Analiza el estado actual:** lee tus índices/specs y detecta qué Fase y qué vía toca. Usa `indices/CONTEXT_MAP.md` como **backlog de onboarding**: cada marca 🟡 es un hueco por entrevistar (Vía B) o transcribir (Vía C). Prioriza los 🟡 de los contextos **Core** (Matrícula, Academia Clase B).
 2. **Intenta resolver con el código primero** (Vía A): busca en `CODE_MAP.md` y cita.
 3. **Si falta, propón un método de extracción acotado** (Vía B): un cuestionario de 3 preguntas, o pegar un correo/acta para que lo analices, o una hipótesis para que el equipo confirme.
 4. **Extrae y transforma con DDD:** identifica Entidad, Agregado, Regla.

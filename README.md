@@ -28,14 +28,15 @@ Está modelado sobre un sólido framework de agente consultor previo, el cual ha
 
 - **`.agent/identity.md`** — personalidad y Critic Loop del agente.
 - **`.claude/CLAUDE.md`** — guardrails (Discovery Gate, Architect Guard, Real-Time Sync, Regla de Punteros).
-- **`indices/`** — el "Discovery Gate": `DOMAIN_GLOSSARY` (lenguaje ubicuo), `PAIN_LOG` (dolores), `BACKLOG`, y `CODE_MAP` (punteros al código real).
+- **`indices/`** — el "Discovery Gate": `DOMAIN_GLOSSARY` (lenguaje ubicuo), `PAIN_LOG` (dolores), `BACKLOG`, `CONTEXT_MAP` (mapa de bounded contexts / espina estratégica DDD) y `CODE_MAP` (punteros al código real).
 - **`specs/`** — "La verdad":
   - `blueprints/` — procesos operativos paso a paso.
   - `domain/` — políticas duras del negocio (no estatales).
   - `regulatory/` — referencia normativa chilena (MTT/SENCE/edad/certificados).
   - `eval/compliance_check.md` — matriz de validación del Critic Loop (invariantes vs advertencias).
   - `io/facade_contracts.md` — el agente razona vía Facades, no SQL crudo.
-- **`skills/`** — rutinas: `context_onboarding`, `interview_guide`, `sync_knowledge`.
+- **`skills/`** — rutinas: `context_onboarding`, `interview_guide`, `meeting_ingestion`, `sync_knowledge`.
+- **`reuniones/`** — actas destiladas de reuniones con stakeholders (`INDEX.md` = registro, `_TEMPLATE.md` = plantilla). Las transcripciones crudas (PII) van en `reuniones/transcripts/` y **no se versionan**.
 - **`task/`** — tareas concretas derivadas de los dolores.
 
 ---
@@ -46,6 +47,7 @@ Está modelado sobre un sólido framework de agente consultor previo, el cual ha
 2. El agente leerá sus guardrails e índices **antes** de responder.
 3. Comandos disponibles:
    - `/onboarding` → extrae/destila conocimiento (ver `skills/context_onboarding.md`).
+   - `/meeting` → procesa la transcripción de una reunión → acta + ruteo (ver `skills/meeting_ingestion.md`).
    - `/sync` → guarda el conocimiento adquirido en los `.md` (ver `skills/sync_knowledge.md`).
 
 > Para una explicación pensada para compartir con el equipo, ver `PROPUESTA-AGENTE.md` / `PROPUESTA-AGENTE-RESUMEN.md`.
