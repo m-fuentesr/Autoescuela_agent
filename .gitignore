@@ -1,0 +1,7 @@
+# Transcripciones crudas de reunión — contienen PII de stakeholders.
+# Solo se versiona el acta destilada (reuniones/reunion-*.md), nunca el crudo.
+reuniones/transcripts/
+
+# OS / editor
+Thumbs.db
+.DS_Store
