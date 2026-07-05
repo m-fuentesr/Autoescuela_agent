@@ -35,6 +35,8 @@
   → código: tabla `payments` (`DATABASE.md:19`), `PagosFacade`, `EnrollmentPaymentFacade`.
 - **Sede (Branch) `[Validado]`** — Local físico de la escuela. Multi-sede: branch 1 = Azul, branch 2 = Roja ("Conductores Chillán", `has_professional=true`). Casi todos los datos están "branch-scoped".
   → código: tabla `branches` (`DATABASE.md:8`), `BranchFacade`, regla `facades.md` sección 7.
+- **Escuela ≈ Sede (uso laxo del término) `[Validado]`** — El equipo usa "escuela" de forma laxa; la **unidad operativa modelada es la Sede/Branch**, no un nivel "tenant" por encima. Cada sede tiene su **oferta de academia** (Clase B / Profesional / ambas, vía `has_professional`) y **su propia secretaria — 1 por sede**. La frase "hay escuelas que poseen las dos o solo 1" se refiere a la oferta **por sede** (ej: una sede solo Clase B, otra B + Profesional). Caso actual: Conductores Chillán = 2 sedes (Azul, Roja), 2 secretarias.
+  → chat 2026-07-05; `branches.has_professional` (Sede); `specs/domain/policies.md` P10; `specs/roles/secretaria.md`.
 
 ## Academia Clase B
 
@@ -81,7 +83,7 @@
 
 ## Matrícula y Documentos
 
-- **Wizard de Matrícula (6 pasos) `[Validado]`** — Flujo: (1) datos personales → (2) clases/horario → (3) documentos → (4) pago → (5) contrato → (6) confirmación. Draft progresivo con expiración (24h presencial).
+- **Wizard de Matrícula (6 pasos) `[Validado]`** — Flujo: (1) datos personales → (2) clases/horario → (3) documentos → (4) pago → (5) contrato → (6) confirmación. Draft progresivo con expiración (24h presencial). **Entrada compartida Clase B + Profesional:** el wizard se **ramifica por `license_group`**; la opción "profesional" aparece solo si la sede tiene `has_professional`, y en esa rama la selección de slots/clases se sustituye por la asignación a una **promoción** (corrección 2026-07-05). El resto de pasos que cambian está `[Por Validar]`.
   → código: `EnrollmentFacade` (`FACADES.md:12`), `indices/MODELS.md` (modelos `enrollment-*`).
 - **Canal: presencial vs online `[Validado]`** — **Presencial:** la secretaria matricula en sede. **Online (público):** el alumno se matricula solo, con reserva de horario (slot_holds, TTL 20 min) y pago Transbank Webpay; idempotencia por `session_token`.
   → código: Edge Function `public-enrollment` (`DATABASE.md:108`), tablas `slot_holds`/`payment_attempts` (`DATABASE.md:63-64`).

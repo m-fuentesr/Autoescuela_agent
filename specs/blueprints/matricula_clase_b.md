@@ -28,8 +28,9 @@
 - **Confirmación atómica:** pago + activación en una sola transacción (anti doble-clic).
 
 ## Diferencias Clase B vs Profesional
-- **Clase B:** este wizard, 12 clases prácticas, Triple Match, carnet dual.
-- **Profesional:** no usa este flujo de slots; se gestiona por **promociones** y **relatores** (ver futuro blueprint `promocion_profesional.md`). Cursos de convalidación no generan enrollment.
+- **Entrada compartida `[corregido 2026-07-05]`:** ambos usan el **mismo formulario/wizard de matrícula**. La rama la decide `license_group`; la opción "profesional" aparece solo si la sede tiene `has_professional`.
+- **Clase B:** ruta de slots — 6/12 clases prácticas, Triple Match, carnet dual.
+- **Profesional:** tras elegir profesional, la ruta cambia — se asigna a una **promoción** (con **relatores**) en vez de slots. Requiere promoción abierta. Cursos de convalidación no generan enrollment (ver futuro blueprint `promocion_profesional.md`).
 
 ## Pendiente de mapeo `[Por Validar]`
 - Flujo exacto de pago pendiente (depósito) y su efecto en cuántas clases puede agendar.

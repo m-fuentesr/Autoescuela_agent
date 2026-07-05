@@ -43,6 +43,13 @@
 - Un relator puede estar en múltiples promociones simultáneamente. Una promoción puede tener múltiples categorías de alumnos. Un desertor puede integrarse a una promoción posterior.
   → código: `promotion_course_lecturers` (`DATABASE.md:50`); `reunion-demo-2026-05-29.md:89-97`.
 
+## P10 — Oferta por tipo de academia (Clase B / Profesional) y alcance de la secretaria
+- El producto soporta **dos tipos de academia**: **Clase B** y **Profesional**. Una escuela puede ofrecer **ambas o solo una**; la operación se adapta a lo que su escuela ofrezca.
+- **La secretaria de una escuela con Profesional tiene participación plena** en ese módulo: puede **matricular, ver datos y operar todo lo profesional** (no queda restringido al admin ni a Clase B).
+- La **matrícula profesional usa el mismo formulario/wizard de matrícula** que Clase B (corrección 2026-07-05). Al seleccionar "profesional" —opción disponible solo si la sede tiene `has_professional`— el flujo **se ramifica** por `license_group`: en vez de la ruta de slots/Triple Match, se asigna a una **promoción** (debe existir una abierta; normalmente siempre hay). Ver `roles/secretaria.md` A1/A8.
+- **Unidad operativa = la Sede `[Validado]`.** "Escuela" se usa de forma laxa: NO es multi-tenant. La oferta (B / Prof / ambas) es **por sede** vía `has_professional`, y hay **1 secretaria por sede**. Caso actual: 2 sedes (Azul, Roja), 2 secretarias.
+  → código: `branches.has_professional` (glosario, Sede); chat 2026-07-05.
+
 ---
 
 > **Para el agente:** cuando el equipo confirme o cambie una política de negocio, edítala aquí de inmediato (Real-Time Sync). Distingue siempre **política de negocio** (este archivo) de **normativa estatal** (`regulatory/`).
