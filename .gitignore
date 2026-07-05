@@ -2,6 +2,9 @@
 # Solo se versiona el acta destilada (reuniones/reunion-*.md), nunca el crudo.
 reuniones/transcripts/
 
+# Flags temporales de hooks (por sesión) — no versionar
+.claude/temp/
+
 # OS / editor
 Thumbs.db
 .DS_Store

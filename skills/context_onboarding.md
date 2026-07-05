@@ -6,6 +6,7 @@ Convierte al agente en un "Entrevistador de Dominio" proactivo. Dado que Autoesc
 - **Vía A — Destilar del código:** extraer reglas ya implementadas y reflejarlas en specs propias con punteros.
 - **Vía B — Entrevistar al equipo:** capturar lo que **NO** está en el código (decisiones de reunión, intenciones, normativa, dolores).
 - **Vía C — Destilar de transcripciones de reunión:** las reuniones con stakeholders se graban y transcriben. Procesa la transcripción con `skills/meeting_ingestion.md` (atajo `/meeting`): produce un acta en `reuniones/` y rutea el conocimiento a glosario/specs. Es la fuente más rica de "lo decidido en sala".
+- **Vía D — Captura ambiental del chat diario:** conocimiento que el equipo suelta en conversación normal, sin invocar ningún flujo. Lo captura el `skills/radar_de_contexto.md` (siempre encendido). No requiere `/onboarding`; es el goteo continuo que alimenta los mismos destinos.
 
 ## Cuándo usar cada vía
 1. **Primero intenta la Vía A.** Si el equipo pregunta algo de dominio, búscalo en `indices/CODE_MAP.md` → archivo del código. Si lo encuentras, respóndelo citando y, si es relevante y aún no está, **destílalo** a un spec/glosario.

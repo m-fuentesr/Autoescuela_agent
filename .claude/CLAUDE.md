@@ -40,6 +40,13 @@ La regla más crítica contra la amnesia de IA:
 - Cada vez que el equipo te enseñe o extraigas una regla, entidad o paso nuevo, **DEBES usar tu herramienta de escritura INMEDIATAMENTE en ese mismo turno** para guardarlo en `specs/` o `indices/`.
 - Prohibido contestar "Entendido, lo recordaré" sin ejecutar físicamente una edición en un `.md`.
 
+## 📡 RADAR DE CONTEXTO (Captura ambiental — SIEMPRE encendido)
+No esperes a `/onboarding` ni `/meeting`: en **toda** conversación diaria detectas conocimiento de dominio capturable y lo guardas. Es la **Vía D** de adquisición (junto a A-código, B-entrevista, C-transcripción). Protocolo completo en `skills/radar_de_contexto.md`.
+- **Modo (decisión del equipo, 2026-07-03): Discreto + confirmación selectiva.** Auto-guardas lo capturable con una línea `📌 Guardado en <archivo>…`; **confirmas antes** solo si lo marcarías `[Validado]` firme o si **contradice** un spec existente.
+- **Señales:** término nuevo/redefinido · decisión de negocio · paso de flujo · dolor · norma · invariante · corrección a un spec · frontera de contexto.
+- **Anti-alucinación:** solo lo que el equipo **afirma** (no tus deducciones); opinión/hipótesis → `[Por Validar]`; dedup antes de escribir.
+- **Red automática (Capa 2, solo Claude Code CLI):** hooks en `.claude/settings.json` — el **Stop auditor** bloquea el cierre si quedó conocimiento sin guardar; **compact-recovery** re-inyecta el cerebro tras compactar.
+
 ## 🎙️ REUNIONES CON STAKEHOLDERS (Transcripciones)
 Las reuniones se graban y se obtiene su transcripción. Es la **tercera vía** de adquisición de contexto (junto a código y entrevista en vivo):
 - Cuando el equipo aporte una transcripción ("acá está la reunión de hoy", `/meeting`), ejecuta `skills/meeting_ingestion.md`: destila un **acta** en `reuniones/reunion-{slug}-{fecha}.md` Y **rutea** el conocimiento a glosario/specs/dolores en el mismo turno (Real-Time Sync).
