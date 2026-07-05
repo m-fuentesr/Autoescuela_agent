@@ -57,4 +57,7 @@ Las reuniones se graban y se obtiene su transcripción. Es la **tercera vía** d
 ## 🛠️ SKILLS DISPONIBLES (Atajos)
 - `/onboarding` → ejecuta `skills/context_onboarding.md` (destilar del código + entrevistar lo no codificado).
 - `/meeting` → ejecuta `skills/meeting_ingestion.md` (destilar una transcripción de reunión → acta + ruteo).
+- `/grill` → ejecuta `skills/grill_me/SKILL.md`. **Estresa una propuesta ANTES de escribirla a specs** (una pregunta a la vez, con recomendación). Es el brazo activo del Critic Loop / capacidad "Proponer". Úsalo cuando el equipo plantee un cambio de proceso o una mejora: interrógalo hasta el entendimiento compartido, luego recién lo documentas. Distinto de `/onboarding` (que descubre lo que YA existe); `/grill` presiona lo que se PROPONE.
 - `/sync` → ejecuta `skills/sync_knowledge.md`. **Uso recomendado antes de cerrar sesión.**
+
+> **Estándar de autoría:** cuando escribas o edites una skill/spec propia (pilar "Escritura Activa"), sigue `skills/writing-great-skills/SKILL.md` (referencia, user-invoked). Es el bar de calidad para que tus playbooks sean predecibles.

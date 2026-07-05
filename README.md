@@ -35,7 +35,7 @@ Está modelado sobre un sólido framework de agente consultor previo, el cual ha
   - `regulatory/` — referencia normativa chilena (MTT/SENCE/edad/certificados).
   - `eval/compliance_check.md` — matriz de validación del Critic Loop (invariantes vs advertencias).
   - `io/facade_contracts.md` — el agente razona vía Facades, no SQL crudo.
-- **`skills/`** — rutinas: `context_onboarding`, `interview_guide`, `meeting_ingestion`, `radar_de_contexto` (captura ambiental del chat), `sync_knowledge`.
+- **`skills/`** — rutinas: `context_onboarding`, `interview_guide`, `meeting_ingestion`, `radar_de_contexto` (captura ambiental del chat), `sync_knowledge`. Meta-skills: `grill_me/` (estresa una propuesta antes de volverla spec — brazo activo del Critic Loop) y `writing-great-skills/` (estándar de autoría para escribir las skills del propio agente).
 - **`.claude/hooks/`** — red automática (solo Claude Code CLI): `compact-recovery.js` re-inyecta el cerebro del agente tras compactar; el **Stop auditor** en `.claude/settings.json` bloquea el cierre si quedó conocimiento sin guardar.
 - **`reuniones/`** — actas destiladas de reuniones con stakeholders (`INDEX.md` = registro, `_TEMPLATE.md` = plantilla). Las transcripciones crudas (PII) van en `reuniones/transcripts/` y **no se versionan**.
 - **`task/`** — tareas concretas derivadas de los dolores.
