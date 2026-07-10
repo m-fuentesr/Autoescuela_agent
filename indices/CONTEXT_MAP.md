@@ -47,7 +47,7 @@
 - 🟢 **Facades:** `EnrollmentFacade`, `EnrollmentDocumentsFacade`, `EnrollmentPaymentFacade`, `PublicEnrollmentFacade`, `AdminPreInscritosFacade`
 - 🟢 **Actores / features:** `secretaria/matricula` (presencial), `public-enrollment` (online), `*/alumnos/pre-inscritos`
 - 🟢 **Tablas:** `enrollments`, `slot_holds`, `payment_attempts`, `digital_contracts`, docs de matrícula · Edge Function `public-enrollment`
-- 🟢 **Reglas codificadas:** wizard 6 pasos · `payment_mode` total/deposit (P1) · selector 6/12 clases (P2) · draft expira 24h presencial (P7) · idempotencia `session_token`, slot hold TTL 20 min (P8)
+- 🟢 **Reglas codificadas:** wizard 6 pasos (orden real: contrato **antes** de pago) · `payment_mode` total/deposit (P1) · agendamiento completo de las 12 clases en el paso 2 (P2, fix-017) · rama profesional = promoción; contrato con **mismo generador/plantilla** (Grill Q5 cerrada 2026-07-05) · rama singular oculta (alta en admin Contabilidad > Cursos) · draft expira 24h presencial (P7) · idempotencia `session_token`, slot hold TTL 20 min (P8)
 - 🟢 **Invariante/advertencia:** menor de edad → autorización notarial (Capa B)
 - 🟡 **Por extraer del equipo:**
   - ¿Por qué el depósito es 50%? ¿Puede variar por curso? (P1 está codificado, el *porqué* y su variabilidad no)
@@ -62,7 +62,7 @@
 - 🟢 **Tablas/vistas:** `class_b_sessions`, `class_b_theory_sessions`, `class_b_practice_attendance`, `class_b_theory_attendance`, vista `v_class_b_schedule_availability` · **certificación:** `certificates`, `certificate_batches`, `enrollments.license_initial_url`/`license_full_url`
 - 🟢 **Invariantes/reglas:** **Triple Match** (alumno+instructor+vehículo simultáneos) · **No doble-booking** · clases/día (1 online, 3 sede, Capa B) · **carnet dual 6/12**, `certificate_enabled` al completar la clase #12 (`trg_enable_certificate_b`) · existencia antes de certificar (Capa A) · certificado con folio+fecha = prueba legal (Capa B)
 - 🟡 **Por extraer del equipo:**
-  - **Flujo de reprogramación de clases** — no tiene blueprint (Fase 2 de onboarding)
+  - **Reprogramación** — mecánica ya destilada 🟢 (vive en la **ficha del alumno**, `AdminAlumnoDetalleFacade.reprogramarClase`, solo B); falta la **política de negocio** (¿cuántas ausencias se toleran? ¿quién autoriza reponer?)
   - Definición exacta de "deuda bloqueante" en la pata Alumno del Triple Match
 
 ### C3 — Alumnos (base)  🎯 Supporting (🟡 validar)
@@ -77,6 +77,7 @@
 - 🟢 **Actores / features:** `*/contabilidad-*`, `*/pagos`, `*/servicios-especiales`
 - 🟢 **Tablas:** `cash_closings`, `expenses`, `fixed_expenses`, `payments`, `sii_receipts`, `instructor_advances`, `instructor_monthly_payments`, `standalone_courses`, `special_service_sales`
 - 🟢 **Reglas/invariantes:** egreso operacional vs estructural (P4) · cupo curso singular `trg_standalone_capacity` (Capa A) · integridad de cuadratura cerrada (Capa A)
+- 🟢 **Actores confirmados desde código (2026-07-05):** el alta/cobro de **cursos singulares es del admin** (Contabilidad > Cursos; el wizard de matrícula oculta la categoría). ⚠️ **Servicios especiales** y **liquidaciones** tienen página en el portal de la **secretaria** aunque el equipo las declaró fuera de su rol → contradicción `[Por Validar]` (ver `roles/secretaria.md`).
 - 🟡 **Por extraer del equipo:**
   - **"Punto de equilibrio"** — marcado `[Por Validar]` en el glosario; requiere sección privada de egresos estructurales (pendiente abierto)
   - Umbral concreto operacional vs estructural (la regla del "~50k si es habitual")
@@ -88,6 +89,7 @@
 - 🟢 **Reglas:** un relator en varias promociones (P9) · convalidación A2→A4 / A5→A3 no consume cupo (P6) · módulos 1-7, escala MTT 10-100, aprobación ≥75 · firma **semanal** (lunes)
 - 🟢 **Advertencia (Capa B):** no reprobar al alumno profesional → usar "concepto" (cita DOLOR-004)
 - 🟡 **Por extraer del equipo:**
+  - **¿El relator usa el sistema?** — no tiene portal ni rol de usuario (solo entidad `lecturers`; secretaria/admin operan en su nombre). Confirmar si es intencional o si tendrá acceso propio (ver glosario "Relator — ¿usuario del sistema?", 2026-07-05)
   - **"Concepto vs nota"** — **DOLOR-004 ya formalizado** en `PAIN_LOG.md` (2026-06-30, estado `En análisis`); las citas de `compliance_check.md` ya resuelven. Falta cerrar la **solución de producto** ("concepto" en vez de nota) con el equipo
   - "Firma diaria" (texto del Excel) vs asistencia **semanal** operativa — confirmar cuál rige
   - Módulo 5 por licencia (A2/A3 Pasajeros, A4/A5 Carga) — confirmar reglas completas

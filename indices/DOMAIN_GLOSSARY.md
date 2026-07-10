@@ -45,6 +45,8 @@
   → código: `enrollments.license_initial_url`/`license_full_url` (`DATABASE.md:67`, fix-019).
 - **Clase Online / Clase teórica (Zoom) `[Validado]`** — **Tipo de clase** impartida de forma **online y teórica**. Aplica **tanto a Clase B como a Academia Profesional** (no es exclusiva de Clase B). La lista de invitados = lista de asistencia; la secretaria marca en tiempo real. Se gestiona/agenda vía `ClaseOnlineFacade`.
   → código: `class_b_theory_sessions` / `professional_theory_sessions`, `ClaseOnlineFacade`.
+- **Ciclo Teórico `[Por Validar]`** — Cohorte de clases teóricas (Zoom) de Clase B: agrupa clases con tema y link de Zoom, y un **roster** de alumnos que la secretaria administra (mover alumno entre ciclos, agregar, enviar email de Zoom a inscritos). Término destilado del código 2026-07-05 — confirmar con el equipo si "ciclo" es la palabra que usan en sala.
+  → código: `CiclosTeoricosFacade`, EF `send-zoom-email`; `specs/blueprints/asistencia_clase_b.md` §2.
 - **Máximo de clases por día `[Validado]`** — Regulación MTT: **1 clase de 45 min/día**. Online (alumno): máx 1/día. En sede (secretaria): hasta 3/día; más de 3 → agenda manual al día siguiente. Soportado por `courses.max_classes_per_day`.
   → código: `courses.max_classes_per_day` (`DATABASE.md:12`), `reunion-demo-2026-05-29.md:25-28`.
 
@@ -83,8 +85,8 @@
 
 ## Matrícula y Documentos
 
-- **Wizard de Matrícula (6 pasos) `[Validado]`** — Flujo: (1) datos personales → (2) clases/horario → (3) documentos → (4) pago → (5) contrato → (6) confirmación. Draft progresivo con expiración (24h presencial). **Entrada compartida Clase B + Profesional:** el wizard se **ramifica por `license_group`**; la opción "profesional" aparece solo si la sede tiene `has_professional`, y en esa rama la selección de slots/clases se sustituye por la asignación a una **promoción** (corrección 2026-07-05). El resto de pasos que cambian está `[Por Validar]`.
-  → código: `EnrollmentFacade` (`FACADES.md:12`), `indices/MODELS.md` (modelos `enrollment-*`).
+- **Wizard de Matrícula (6 pasos) `[Validado]`** — Flujo: (1) datos personales → (2) asignación → (3) documentos → (4) **contrato** → (5) **pago** → (6) confirmación *(orden corregido 2026-07-05 desde el código: contrato ANTES de pago)*. Draft progresivo con expiración (24h presencial). **Entrada compartida Clase B + Profesional:** el wizard se **ramifica por `license_group`**; la opción "profesional" aparece solo si la sede tiene `has_professional`, y en esa rama la selección de slots se sustituye por la asignación a una **promoción**. Pasos que cambian en la rama profesional: campos extra en paso 1 (licencia actual, convalidación simultánea), HVC obligatoria en paso 3, textos propios en paso 6; el contrato usa el **mismo generador/plantilla** (ver Contrato Digital). La categoría **"singular" está siempre oculta** en el wizard (su alta la hace el admin en Contabilidad > Cursos). Detalle: `specs/blueprints/matricula_clase_b.md`.
+  → código: `EnrollmentFacade` (`FACADES.md:12`), `secretaria-matricula.component.ts` (`stepLabels`), `indices/MODELS.md` (modelos `enrollment-*`).
 - **Canal: presencial vs online `[Validado]`** — **Presencial:** la secretaria matricula en sede. **Online (público):** el alumno se matricula solo, con reserva de horario (slot_holds, TTL 20 min) y pago Transbank Webpay; idempotencia por `session_token`.
   → código: Edge Function `public-enrollment` (`DATABASE.md:108`), tablas `slot_holds`/`payment_attempts` (`DATABASE.md:63-64`).
 - **Slot `[Validado]`** — Bloque horario exacto de 45 min (no rango continuo). Horarios L-V definidos en `courses.schedule_blocks`.
@@ -95,8 +97,8 @@
   → código: `EnrollmentDocumentsFacade` (`FACADES.md:13`).
 - **HVC (Hoja de Vida del Conductor) `[Validado]`** — Documento profesional con validación de antigüedad (máx 30 días, RF-082.3).
   → código: `enrollment-documents.model.ts` (`HvcValidation`).
-- **Contrato Digital `[Validado]`** — PDF de contrato generado automáticamente; en flujo online se sube el firmado escaneado.
-  → código: Edge Function `generate-contract-pdf` (`DATABASE.md:103`), tabla `digital_contracts` (`DATABASE.md:69`).
+- **Contrato Digital `[Validado]`** — PDF de contrato generado automáticamente; en flujo online se sube el firmado escaneado. **Un solo generador y una sola plantilla para Clase B y Profesional** (se parametriza con los datos del curso); si hay **convalidación simultánea** agrega sección + cláusula SÉPTIMA (libro independiente, horas cubiertas por el valor único). No existe plantilla profesional aparte (cierra Grill Q5, 2026-07-05).
+  → código: Edge Function `generate-contract-pdf` (`DATABASE.md:103`), `_shared/contract-pdf.ts`, tabla `digital_contracts` (`DATABASE.md:69`).
 - **Certificado `[Validado]`** — Documento con folio y fecha de entrega = **prueba legal** ante reclamos. Lotes de certificados (`certificate_batches`).
   → código: tablas `certificates`/`certificate_batches` (`DATABASE.md:82-83`).
 
@@ -107,6 +109,8 @@
 - **Instructor `[Validado]`** — Ve su agenda del día, inicia/finaliza clases, firma fichas, evalúa.
 - **Alumno (Student portal) `[Validado]`** — Consulta sus clases, estado de cuenta, progreso, certificado.
   → código: `roles` (`DATABASE.md:9`), RLS por rol en cada tabla.
+- **Relator — ¿usuario del sistema? `[Por Validar]`** — El relator existe solo como **entidad de datos** (`lecturers`, asignado a promociones vía `promotion_course_lecturers`), **no como usuario del sistema**: no tiene portal (`hasRoleGuard` solo cubre admin/secretaria/instructor/alumno), no aparece en Auth ni en la matriz de roles de `tasks`. Su operación (asistencia, notas) la ejecutan secretaria/admin en su nombre. **Preguntar al equipo:** ¿es intencional/permanente, o el relator debería tener acceso propio a futuro? Afecta si se le hace mapa de rol (TASK_002 §8).
+  → código: `app.routes.ts` (guards), `promotion_course_lecturers` (`DATABASE.md:51`); barrido 2026-07-05.
 
 ## Sistemas y Plataforma
 

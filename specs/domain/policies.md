@@ -5,13 +5,13 @@
 ---
 
 ## P1 — Modalidad de pago de la matrícula
-- **Total vs Depósito (`payment_mode`):** la matrícula puede pagarse completa (`total`) o con depósito (`deposit`, 50%). El depósito condiciona cuántas clases puede agendar el alumno.
-- **Descuento libre:** en el paso de pago se puede aplicar un descuento libre (monto + motivo, queda en log de auditoría) — equivale a las "promociones" del sistema anterior.
-  → código: `EnrollmentPaymentFacade` (`FACADES.md:14`); `enrollments.payment_mode` (`DATABASE.md:67`).
+- **Total vs Depósito (`payment_mode`):** la matrícula puede pagarse completa (`total`) o con depósito (`deposit`, 50%). `[corregido 2026-07-05 — destilado del código]` El depósito afecta el **monto a pagar**, NO cuántas clases se agendan: en el paso 2 se agendan **siempre** las 12 (ver P2 / fix-017).
+- **Descuentos:** en el paso de pago hay **descuentos predefinidos por tipo de curso** (`loadAvailableDiscounts`) además del descuento libre (monto + motivo, queda en log de auditoría) — este último equivale a las "promociones" del sistema anterior.
+  → código: `EnrollmentPaymentFacade` (`FACADES.md:14`); `enrollments.payment_mode` (`DATABASE.md:67`); comentario `step2Data` en `secretaria-matricula.component.ts`.
 
-## P2 — Selector de 6 o 12 clases
-- En la matrícula se elige 6 o 12 clases, lo que controla cuántas fechas puede seleccionar el alumno. Al matricularse en Clase B se agendan **todas** las clases de una vez (ya no existe "agendar la segunda mitad" desde la agenda).
-  → código: `AgendaFacade` fix-017 (`FACADES.md:18`); `reunion-demo-2026-05-29.md:23`.
+## P2 — Agendamiento completo en la matrícula (ex "selector 6/12")
+- `[corregido 2026-07-05 — destilado del código]` El wizard actual **no tiene selector de 6/12 clases**: el total de sesiones se deriva de las horas prácticas del curso (12 sesiones de 45 min) y en el paso 2 se seleccionan y agendan **todas de una vez**, aunque el alumno pague solo el depósito. El "6 o 12" de la reunión demo sobrevive como `payment_mode` (pagar la mitad), no como selector de clases. Ya no existe "agendar la segunda mitad" desde la Agenda (fix-017; la Agenda es un visor de solo lectura).
+  → código: `AgendaFacade` fix-017 (`FACADES.md:18`); `step2Data`/`requiredCount` en `secretaria-matricula.component.ts`; (histórico: `reunion-demo-2026-05-29.md:23`).
 
 ## P3 — Clases por día según canal
 - Online: 1 clase/día. En sede (secretaria): hasta 3/día. (Coincide con la normativa MTT pero es además decisión operativa del producto.)

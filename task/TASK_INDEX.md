@@ -9,5 +9,5 @@ Tareas concretas y accionables derivadas de los dolores (`indices/PAIN_LOG.md`) 
 | # | Tarea | Origen | Prioridad | Estado |
 |---|---|---|---|---|
 | 001 | [Estrenar el flujo `/meeting` con una transcripción real](TASK_001_probar_flujo_meeting.md) | Sistema de reuniones (sin transcripción disponible aún) | Media | Pendiente |
-| 002 | [Completar el Mapa de Rol de la Secretaria](TASK_002_mapa_flujos_secretaria.md) | Rastreo de flujos por tipo de usuario | Alta | En progreso (pausado 2026-07-05) |
+| 002 | [Completar el Mapa de Rol de la Secretaria](TASK_002_mapa_flujos_secretaria.md) | Rastreo de flujos por tipo de usuario | Alta | En progreso — código barrido 2026-07-05; quedan validaciones de negocio (Vía B) |
 | — | Completar DOLOR-003 ("pruebas escritas por email") | `PAIN_LOG.md` DOLOR-003 | Media | Pendiente (por validar con equipo) |
