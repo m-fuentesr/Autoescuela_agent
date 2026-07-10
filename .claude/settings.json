@@ -9,6 +9,14 @@
             "command": "node .claude/hooks/compact-recovery.js"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/sync_agents.js"
+          }
+        ]
       }
     ],
     "Stop": [
